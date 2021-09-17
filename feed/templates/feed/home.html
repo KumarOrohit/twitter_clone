@@ -1,0 +1,38 @@
+{% extends 'feed/base.html' %}
+
+{%block content%}
+    <br><br>
+    <div class="container" style="background-color: rgb(168, 179, 175);">
+        <div class="jumbotron" >
+            <h1 class="display-4">Hello, {{user.username}}!</h1>
+            <p class="lead">This is a Twitter clone!!</p>
+            <hr class="my-4">
+            <p>Click below to create a tweet</p>
+            <p class="lead">
+            <a class="btn btn-primary btn-lg" href="{% url 'tweetcreate' %}" role="button">Create</a>
+            </p>
+            <br>
+        </div>
+    </div>
+    <br><br>
+    <div class="container">
+        {% for tweet in object_list %}
+            
+            <div class="card">
+                <div class="card-header">
+                    <a href="{% url 'profile' %}" style="text-decoration:none"><h4>{{tweet.usrName}}</h4></a>
+                    <p>{{tweet.dateTime}}</p>
+                </div>
+                <div class="card-body">
+                    <p class="card-text"><h5>{{tweet.tweets}}</h5></p>
+
+                    {% if tweet.usrName == user %}
+                        <a href="{% url 'tweetupdate' tweet.id %}"><button class="btn btn-outline-info">Update</button></a>
+                        <a href="{% url 'tweetdelete' tweet.id %}"><button class="btn btn-outline-danger">Delete</button></a>
+                    {% endif %}
+                </div>
+            </div>  
+            <br>
+        {% endfor %}
+    </div>    
+{%endblock content%}
